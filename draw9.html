@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script>
+// set globals
+// x,z represent the middle map to draw of 9
+var x,z;
+var center ;
+var nw,north,ne,east,se,south,sw,west;
+
+
+function home() {
+	x = -1;
+	z = -1;
+	center.style.top  = "10px";
+	center.style.left = "10px";
+	draw_map();
+	set_title( "Drag from the center for now." );
+}
+
+/* 
+Grid of X,Z:
+{nw,n,ne}   {{ 1,-1},{ 1,0},{ 1,1}}
+{w ,c, e} = {{ 0,-1},{ 0,0},{ 0,1}}  
+{sw,s,se}   {{-1,-1},{-1.0},{-1,1}}
+*/
+function draw_map() {
+	center.innerHTML = '<img src="r.' +  x    + '.' +  z    + '.nw.png"/>';
+
+	nw.innerHTML     = '<img src="r.' + (x+1) + '.' + (z-1) + '.nw.png"/>';
+	north.innerHTML  = '<img src="r.' + (x+1) + '.' +  z    + '.nw.png"/>';
+	ne.innerHTML     = '<img src="r.' + (x+1) + '.' + (z+1) + '.nw.png"/>';
+	east.innerHTML   = '<img src="r.' +  x    + '.' + (z+1) + '.nw.png"/>';
+	se.innerHTML     = '<img src="r.' + (x-1) + '.' + (z+1) + '.nw.png"/>';
+	south.innerHTML  = '<img src="r.' + (x-1) + '.' +  z    + '.nw.png"/>';
+	sw.innerHTML     = '<img src="r.' + (x-1) + '.' + (z-1) + '.nw.png"/>';
+	west.innerHTML   = '<img src="r.' +  x    + '.' + (z-1) + '.nw.png"/>';
+
+
+
+	// place according to size of center map: 50% of top and 50% of left			// Tested with hardcode locations
+	nw.style.top    = (center.offsetTop       + (center.offsetHeight-nw.offsetHeight))    + "px";
+	north.style.top = (center.offsetTop + 512 + (center.offsetHeight-north.offsetHeight)) + "px";	//north.style.top  = (center.offsetTop  +  557) + "px";
+	ne.style.top    = (center.offsetTop + 1024+ (center.offsetHeight-ne.offsetHeight))    + "px";
+	east.style.top  = (center.offsetTop + 512 + (center.offsetHeight-east.offsetHeight))  + "px";
+	se.style.top    = (center.offsetTop       + (center.offsetHeight-se.offsetHeight))    + "px";
+	south.style.top = (center.offsetTop - 512 + (center.offsetHeight-south.offsetHeight)) + "px";	//south.style.top  = (center.offsetTop  -  461) + "px";
+	sw.style.top    = (center.offsetTop - 1024+ (center.offsetHeight-sw.offsetHeight))    + "px";
+	west.style.top  = (center.offsetTop - 512 + (center.offsetHeight-west.offsetHeight))  + "px";	//west.style.top   = (parseInt(center.style.top)  - 0560) + "px";
+
+	nw.style.left    = (center.offsetLeft + 2048)                                          + "px";
+	north.style.left = (center.offsetLeft + (center.offsetWidth+north.offsetWidth)/4 - 5) + "px";	//north.style.left = (center.offsetLeft + 1024) + "px";
+	ne.style.left    =  center.offsetLeft                                                 + "px";
+	east.style.left  = (center.offsetLeft - (center.offsetWidth+east.offsetWidth)/4 + 5)  + "px";
+	se.style.left    = (center.offsetLeft - 2048)                                         + "px";
+	south.style.left = (center.offsetLeft - (center.offsetWidth+south.offsetWidth)/4 + 5) + "px";	//south.style.left = (center.offsetLeft - 1024) + "px";
+	sw.style.left    =  center.offsetLeft                                                 + "px";
+	west.style.left  = (center.offsetLeft + (center.offsetWidth+west.offsetWidth)/4 - 5)  + "px";	//west.style.left  = (parseInt(center.style.left) + 1024) + "px";
+
+
+}
+
+function set_title( title_text ) {
+	document.getElementById('title').innerHTML = title_text ;
+}
+
+</script>
+
+</head>
+<body onload="home()">
+
+<!-- order matters here back ones need to be drawn first -->
+<div id=sw     style="position:absolute;"></div>
+<div id=south  style="position:absolute;"></div>
+<div id=se     style="position:absolute;"></div>
+<div id=west   style="position:absolute;"></div>
+<div id=center style="position:absolute;"></div>
+<div id=east   style="position:absolute;"></div>
+<div id=nw     style="position:absolute;"></div>
+<div id=north  style="position:absolute;"></div>
+<div id=ne     style="position:absolute;"></div>
+
+<div style="position:absolute; top:0; left:50%;">
+	<center>
+		<h1 id=title>Page Loading</h1>
+		<input type="button" value="Reset" 	onclick="home()"/>
+	</center>
+</div>
+
+
+<script>
+// startup get elemetns
+center = document.getElementById('center');
+nw     = document.getElementById('nw');
+north  = document.getElementById('north');
+ne     = document.getElementById('ne');
+east   = document.getElementById('east');
+se     = document.getElementById('se');
+south  = document.getElementById('south');
+sw     = document.getElementById('sw');
+west   = document.getElementById('west');
+
+
+// catch keypresses
+document.onkeydown = checkKey;
+function checkKey(e) {
+    e = e || window.event;
+
+    if (e.keyCode == '38') { // up arrow (SW)
+	x--;z--;
+    }
+    else if (e.keyCode == '40') { // down arrow (NE)
+	x++;z++;
+    }
+    else if (e.keyCode == '37') { // left arrow (SE)
+	x--;z++;
+    }
+    else if (e.keyCode == '39') { // right arrow (NW)
+	x++;z--;
+    }
+    draw_map();
+    set_title( 'near: ' + X + '.' + Z );
+		// {nw,n,ne}   {{ 1,-1},{ 1,0},{ 1,1}}
+		// {w ,c, e} = {{ 0,-1},{ 0,0},{ 0,1}}  
+		// {sw,s,se}   {{-1,-1},{-1.0},{-1,1}}
+}
+
+
+
+// Make the DIV element draggable:
+// From: https://www.w3schools.com/howto/howto_js_draggable.asp
+dragElement(center);
+dragElement(nw);
+dragElement(north);
+dragElement(ne);
+dragElement(east);
+dragElement(se);
+dragElement(south);
+dragElement(sw);
+dragElement(west);
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  elmnt.onmousedown = dragMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set center's new position:
+    center.style.top  = (center.offsetTop - pos2)  + "px";
+    center.style.left = (center.offsetLeft - pos1) + "px";
+
+    draw_map();
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+</script>
+</body>
+<html>
