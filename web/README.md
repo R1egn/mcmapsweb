@@ -1,12 +1,14 @@
-The web frontend 
+# The web frontend to view stiched together mcmaps.
 
-# TODO
+## Bugs
+1. Layout maps clean without having to drag around.
 
-1. Add to github.
-1. Format this file
-1. Layout maps clean.
+## TODO
 1. Add option to go to coords.
-1. Move around with swapping maps clean.
-1. Move scripts to their own file? (*.js?)
-1. Move into project including *.sh for creating the maps.
+1. Format this file
+1. Move around while swapping maps in the background.
+1. Move scripts to their own file? (\*.js?)
 
+## DONE
+1. Add to github.
+1. Move into project including \*.sh for creating the maps.
