@@ -1,8 +1,96 @@
 <!DOCTYPE html>
 <html>
+<head>
+
+<script>
+// set globals
+var x,z;
+
+function home() {
+	x=-1;
+	z=-1;
+
+	draw_map();
+}
+function draw_map() {
+	var map = document.getElementById("movediv")
+	var title = 'Map ' + x + '.' + z + 
+		' top: ' + map.style.top + ' left: ' + map.style.left ;
+	document.getElementById('title').innerHTML = title ;
+	document.getElementById('map').src = 'image/r.' + x + '.' + z + '.nw.png';
+	document.getElementById('map').alt = title;
+}
+</script>
+
+</head>
 <body>
-<p><input type="button" value="Add X"/><input type="button" value="Subtract X"/>  
-<input type="button" value="Add Z"/><input type="button" value="Subtract Z"/></p>
-<center><img src="image/r.0.0.ne.png" style="width:50%;"/></center>
+
+<div id=movediv style="position:absolute; top:0; left:0;">
+	<img id=map src="" alt=""/>
+</div>
+
+<div style="position:absolute; top:0; left:50%;">
+	<center>
+		<h1 id=title>Page Loading</h1>
+		<input type="button" value="Reset" 	onclick="home()"/>
+	</center>
+</div>
+<div style="position:absolute; bottom:30%; right:30%;">
+	<input type="button" value="North" 	onclick="x++;draw_map()"/><!---->
+</div>
+<div style="position:absolute; top:30%; left:30%;">
+	<input type="button" value="South"	onclick="x--;draw_map()"/><!---->
+</div>
+<div style="position:absolute; bottom:30%; left:30%;">
+	<input type="button" value="East" 	onclick="z++;draw_map()"/><!---->
+</div>
+<div style="position:absolute; top:30%; right:30%;">
+	<input type="button" value="West"	onclick="z--;draw_map()"/><!---->
+</div>
+
+
+<script>
+home();
+
+// Make the DIV element draggable:
+// From: https://www.w3schools.com/howto/howto_js_draggable.asp
+dragElement(document.getElementById("movediv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  elmnt.onmousedown = dragMouseDown;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+</script>
 </body>
 <html>

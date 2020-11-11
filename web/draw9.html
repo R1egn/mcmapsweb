@@ -28,37 +28,44 @@ Grid of X,Z for reference:
 function draw_map() {
 	center.innerHTML = '<img src="image/r.' +  x    + '.' +  z    + '.nw.png"/>';
 
-	nw.innerHTML     = '<img src="image/r.' + (x+1) + '.' + (z-1) + '.nw.png"/>';
-	north.innerHTML  = '<img src="image/r.' + (x+1) + '.' +  z    + '.nw.png"/>';
-	ne.innerHTML     = '<img src="image/r.' + (x+1) + '.' + (z+1) + '.nw.png"/>';
-	east.innerHTML   = '<img src="image/r.' +  x    + '.' + (z+1) + '.nw.png"/>';
-	se.innerHTML     = '<img src="image/r.' + (x-1) + '.' + (z+1) + '.nw.png"/>';
-	south.innerHTML  = '<img src="image/r.' + (x-1) + '.' +  z    + '.nw.png"/>';
-	sw.innerHTML     = '<img src="image/r.' + (x-1) + '.' + (z-1) + '.nw.png"/>';
-	west.innerHTML   = '<img src="image/r.' +  x    + '.' + (z-1) + '.nw.png"/>';
+        draw1( nw, x+1, z-1, 
+                (center.offsetTop + (center.offsetHeight-nw.offsetHeight)),
+	        (center.offsetLeft + 2048)
+                );
+	draw1( north, (x+1) ,  z    , 
+                (center.offsetTop + 512 + (center.offsetHeight-north.offsetHeight)),
+	        (center.offsetLeft + (center.offsetWidth+north.offsetWidth)/4 - 5) 
+                );
+	draw1( ne, (x+1) , (z+1) , 
+                (center.offsetTop + 1024+ (center.offsetHeight-ne.offsetHeight))   ,
+	        (center.offsetLeft)
+                );
+	draw1( east,  x    , (z+1) , 
+                (center.offsetTop + 512 + (center.offsetHeight-east.offsetHeight)) ,
+	        (center.offsetLeft - (center.offsetWidth+east.offsetWidth)/4 + 5)  
+                );
+	draw1( se, (x-1) , (z+1) , 
+                (center.offsetTop       + (center.offsetHeight-se.offsetHeight))   ,
+	        (center.offsetLeft - 2048)                                         
+                );
+	draw1( south, (x-1) ,  z    , 
+                (center.offsetTop - 512 + (center.offsetHeight-south.offsetHeight)),
+	        (center.offsetLeft - (center.offsetWidth+south.offsetWidth)/4 + 5) 
+                );
+	draw1( sw, (x-1) , (z-1) , 
+                (center.offsetTop - 1024+ (center.offsetHeight-sw.offsetHeight))   ,
+		(center.offsetLeft)
+                );
+	draw1( west,  x    , (z-1) , 
+                (center.offsetTop - 512 + (center.offsetHeight-west.offsetHeight)) ,
+	        (center.offsetLeft + (center.offsetWidth+west.offsetWidth)/4 - 5)  
+                );
+}
 
-
-
-	// place according to size of center map: 50% of top and 50% of left			// Tested with hardcode locations
-	nw.style.top    = (center.offsetTop       + (center.offsetHeight-nw.offsetHeight))    + "px";
-	north.style.top = (center.offsetTop + 512 + (center.offsetHeight-north.offsetHeight)) + "px";	//north.style.top  = (center.offsetTop  +  557) + "px";
-	ne.style.top    = (center.offsetTop + 1024+ (center.offsetHeight-ne.offsetHeight))    + "px";
-	east.style.top  = (center.offsetTop + 512 + (center.offsetHeight-east.offsetHeight))  + "px";
-	se.style.top    = (center.offsetTop       + (center.offsetHeight-se.offsetHeight))    + "px";
-	south.style.top = (center.offsetTop - 512 + (center.offsetHeight-south.offsetHeight)) + "px";	//south.style.top  = (center.offsetTop  -  461) + "px";
-	sw.style.top    = (center.offsetTop - 1024+ (center.offsetHeight-sw.offsetHeight))    + "px";
-	west.style.top  = (center.offsetTop - 512 + (center.offsetHeight-west.offsetHeight))  + "px";	//west.style.top   = (parseInt(center.style.top)  - 0560) + "px";
-
-	nw.style.left    = (center.offsetLeft + 2048)                                          + "px";
-	north.style.left = (center.offsetLeft + (center.offsetWidth+north.offsetWidth)/4 - 5) + "px";	//north.style.left = (center.offsetLeft + 1024) + "px";
-	ne.style.left    =  center.offsetLeft                                                 + "px";
-	east.style.left  = (center.offsetLeft - (center.offsetWidth+east.offsetWidth)/4 + 5)  + "px";
-	se.style.left    = (center.offsetLeft - 2048)                                         + "px";
-	south.style.left = (center.offsetLeft - (center.offsetWidth+south.offsetWidth)/4 + 5) + "px";	//south.style.left = (center.offsetLeft - 1024) + "px";
-	sw.style.left    =  center.offsetLeft                                                 + "px";
-	west.style.left  = (center.offsetLeft + (center.offsetWidth+west.offsetWidth)/4 - 5)  + "px";	//west.style.left  = (parseInt(center.style.left) + 1024) + "px";
-
-
+function draw1( item, X, Z, top, left ) {
+	item.innerHTML  = '<img src="image/r.' + X + '.' + Z + '.nw.png"/>';
+	item.style.top  = top  + "px";
+	item.style.left = left + "px";
 }
 
 function set_title( title_text ) {
