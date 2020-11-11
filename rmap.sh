@@ -3,8 +3,6 @@
 # Preset defaults for rendering maps by Region
 #
 # Usage ~/rmaps.sh X Z
-#
-# Going with 1km points and user only enters centre point measured in KM's.
 
 #set variables
 if [ -z $1 ]; then x=0; else x=$1; fi			# set to 0 0 if not provided 
@@ -24,12 +22,16 @@ if [ ! -f "$mca" ]; then
   exit
 fi
 
-for direction in nw ne se sw; do				# generate for all 4 directions: nw ne se sw
-  png=/home/share/mcmap/all/$name.$direction.$(date --iso).png	# the file we are creating (TODO load date from mca file)
-  link=/home/share/mcmap/$name.$direction.png			# link to todays file
+# generate for all 4 directions: nw ne se sw
+for direction in nw ne se sw; do					
+  # the file we are creating (TODO load date from mca file)
+  png=/home/share/mcmap/image/all/$name.$direction.$(date --iso).png	
+  # link to todays file
+  link=/home/share/mcmap/image/$name.$direction.png			
   
   # see if region even needs to be updated - exit if not
-  # NOTE verify that region dates are working (it looks like they update when server starts)
+  # NOTE verify that region dates are working (it looks like they update when 
+  # minecraft server starts because of touch script)
   if [ $mca -ot $png ]; then
     echo -e "\e[33mRegion image ($direction) is up to date, exiting.\e[0m"
     exit
@@ -39,8 +41,8 @@ for direction in nw ne se sw; do				# generate for all 4 directions: nw ne se sw
   /home/mcserver/mcmap/mcmap -min 50 -splits 8 -$direction -file "$png" -from $from -to $to "$world"
   
   # create link to the file in a clean dir
-  if [ $? = 0 ]; then						# last command success
-    if [ -s "$png" ]; then					# file exists and has a size greater than zero
+  if [ $? = 0 ]; then		# last command success
+    if [ -s "$png" ]; then	# file exists and has a size greater than zero
       ln --force "$png" "$link" -v
       # later this could match format required by viewer program
     fi

@@ -17,8 +17,8 @@ for direction in nw ne se sw; do			# generate for nw ne se sw
   # TODO if larger than 5000 then don't use other directions
   if [ $size -gt 5000 ] && [ $direction != nw ]; then exit; fi
   
-  png=/home/share/mcmap/all/$name.$direction.$(date --iso).png	# the file we are creating
-  link=/home/share/mcmap/$name.$direction.png			# link to todays file
+  png=/home/share/mcmap/image/all/$name.$direction.$(date --iso).png	# the file we are creating
+  link=/home/share/mcmap/image/$name.$direction.png			# link to todays file
   
   # create the map for the selected region
   /home/mcserver/mcmap/mcmap -min 50 -splits 8 -$direction -file "$png" -from $from -to $to "$world"

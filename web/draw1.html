@@ -26,7 +26,7 @@ Grid of X,Z for reference:
 {sw,s,se}   {{-1,-1},{-1.0},{-1,1}}
 */
 function draw_map() {
-	center.innerHTML = '<img src="r.' +  x    + '.' +  z    + '.nw.png"/>';
+	center.innerHTML = '<img src="image/r.' +  x    + '.' +  z    + '.nw.png"/>';
 
         draw1( nw, x+1, z-1, 
                 (center.offsetTop + (center.offsetHeight-nw.offsetHeight)),
@@ -63,7 +63,7 @@ function draw_map() {
 }
 
 function draw1( item, X, Z, top, left ) {
-	item.innerHTML  = '<img src="r.' + X + '.' + Z + '.nw.png"/>';
+	item.innerHTML  = '<img src="image/r.' + X + '.' + Z + '.nw.png"/>';
 	item.style.top  = top  + "px";
 	item.style.left = left + "px";
 }
