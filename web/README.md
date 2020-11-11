@@ -1,8 +1,12 @@
 # The web frontend to view stiched together mcmaps.
 
 ## Bugs
-1. Layout maps clean without having to drag around. This is a javascript 
-   change, something on the page load.
+1. Layout maps clean without having to drag around to align them first.  
+   This is a javascript change, something on the page load.
+
+## NOTES
+1. Many of the files are hard linked on the server. When this is done it 
+   would be great if they were no longer hard linked.
 
 ## TODO
 1. Move around while swapping maps in/out of the browser window 

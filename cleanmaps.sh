@@ -4,7 +4,8 @@
 # This process should not break anything.
 
 # Compress stuff that isn't used much
-# go through and remove duplicate files (keeping oldest and current) and update links where possible.
+# go through and remove duplicate files (keeping oldest and current) and update 
+# links where possible.
 echo Hard linking duplicate files.
 declare -A arr
 shopt -s globstar
