@@ -37,8 +37,9 @@ for direction in nw ne se sw; do
     exit
   fi
   
+  # XXX This is failing. 2022-01-04
   # create the map for the selected region
-  /home/mcserver/mcmap/mcmap -min 50 -splits 8 -$direction -file "$png" -from $from -to $to "$world"
+  ./mcmap/mcmap -min 50 -splits 8 -$direction -file "$png" -from $from -to $to "$world"
   
   # create link to the file in a clean dir
   if [ $? = 0 ]; then		# last command success
